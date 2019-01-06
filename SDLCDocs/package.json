@@ -1,12 +1,12 @@
 {
-  "name": "sdlcdocs",
+  "name": "my-project",
   "version": "1.0.0",
   "description": "production of binder",
   "main": "createBinder.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Rich Hildred - 095718310",
+  "author": "<Your Name> - <student number>",
   "license": "MIT",
   "dependencies": {
     "parse5-sax-parser": "^5.1.0",
