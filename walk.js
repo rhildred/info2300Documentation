@@ -15,8 +15,8 @@ var walk = function (dir, done) {
                         next();
                     });
                 } else {
-                    if (file.search("md$") != -1) {
-                        results.push(file);
+                    if (file.search("md$") != -1 && file.search("README") == -1) {
+                        results.push(file.replace(__dirname, ""));
 
                     }
                     next();
@@ -28,7 +28,7 @@ var walk = function (dir, done) {
 
 walk(__dirname, function (err, results) {
     if (err) throw err;
-    var json = JSON.stringify(results);
+    var json = JSON.stringify(results, null, 2);
     fs.writeFile('allMarkdown.json', json, 'utf8', ()=>console.log("file written"));
 
  });

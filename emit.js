@@ -7,16 +7,16 @@ var showdown = require('showdown'),
 
 var nFile = 0;
 
-var streamOutfile = fs.createWriteStream("out.html");
+var streamOutfile = fs.createWriteStream("index.html");
 
 var next = () => {
-    var sFile = aFiles[nFile++];
+    var sFile = `${__dirname}${aFiles[nFile++]}`;
     sHtml = "<h2 class=\"chapter\">" + path.basename(sFile).replace(/\+/g, " ").replace(".md", "") + "</h2>";
     fs.readFile(sFile, 'utf8', (err, data) => {
         if (err) throw err;
         sHtml += converter.makeHtml(data);
-        var aDir = path.dirname(sFile).split(path.sep);
-        sHtml = sHtml.replace("img src=\"images", "img src=\"" + aDir[aDir.length - 1] + path.sep + "images");
+        var sDir = path.dirname(sFile).replace(`${__dirname}/`, "");
+        sHtml = sHtml.replace("img src=\"images", `img src="${sDir}/images`);
         streamOutfile.write(sHtml, (err) => {
             if (err) throw err;
             if (nFile < aFiles.length) {

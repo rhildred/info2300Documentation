@@ -14,13 +14,14 @@ const PDFDocument = require('pdfkit');
 var bFirstTime = true;
 
 var next = () => {
-    var sFile = aFiles[nFile++];
+    var sFile = `${__dirname}${aFiles[nFile++]}`;
     sHtml = "<h2 class=\"chapter\">" + path.basename(sFile).replace(/\+/g, " ").replace(".md", "") + "</h2>";
     fs.readFile(sFile, 'utf8', (err, data) => {
         if (err) throw err;
         sHtml += converter.makeHtml(data.replace(/[“”]/g, "\""));
-        var aDir = path.dirname(sFile).split(path.sep);
-        sHtml = sHtml.replace("img src=\"images", "img src=\"" + aDir[aDir.length - 1] + path.sep + "images");
+        // get relative dir to this file
+        var sDir = path.dirname(sFile).replace(`${__dirname}/`, "");
+        sHtml = sHtml.replace("img src=\"images", `img src="${sDir}/images`);
         streamOutfile.write(sHtml, (err) => {
             if (err) throw err;
             if (nFile < aFiles.length) {
